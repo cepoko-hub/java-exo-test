@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exercice </title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">ex1</a></li>
+                <li><a href="index-exo2.html">exo2</a></li>
+                <li><a href="index-exo3.html">exo3</a></li>
+                <li><a href="index-exo4.html">exo4</a></li>
+                <li><a href="index-exo5.html">exo5</a></li>
+                <li><a href="index-exo6.html">exo6</a></li>
+                <li><a href="index-exo7.html">exo7</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="welcome"></div>
+
+    <div id="countdown"></div>
+    
+    <div id="blink"></div>
+
+    <div id="clock"></div>
+
+    <script>
+        setTimeout(function() {
+            document.getElementById("welcome").innerText = "Bienvenue !";
+        }, 2000);
+
+        let countdownTime = 5;
+        document.getElementById("countdown").innerText = countdownTime;
+
+        const countdownInterval = setInterval(function() {
+            countdownTime--;
+            if (countdownTime > 0) {
+                document.getElementById("countdown").innerText = countdownTime;
+            } else {
+                document.getElementById("countdown").innerText = "Go !";
+                clearInterval(countdownInterval); 
+            }
+        }, 1000); 
+
+        const blinkElement = document.getElementById("blink");
+        blinkElement.innerText = "Clignotant...";
+        
+        let isVisible = true;
+
+        setInterval(function() {
+            isVisible = !isVisible; 
+            blinkElement.style.visibility = isVisible ? "visible" : "hidden";
+        }, 500);
+
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById("clock").innerText = `${hours}:${minutes}`;
+        }
+
+        setInterval(updateClock, 1000);
+
+        updateClock();
+    </script>
+</body>
+</html>
