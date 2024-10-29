@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Affichage d'Images</title>
+  <link rel="stylesheet" href="css.css">
+  <style>
+
+    #mainImage {
+      width: 80%;
+      height: auto;
+      margin: 20px 0;
+      border: 2px solid #333;
+    }
+
+    .thumbnails {
+      display: flex;
+      gap: 10px;
+    }
+
+    .thumbnail {
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    .thumbnail:hover {
+      border-color: #333;
+    }
+  </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">exo1</a></li>
+                <li><a href="index-exo2.html">exo2</a></li>
+                <li><a href="index-exo3.html">exo3</a></li>
+                <li><a href="index-exo4.html">exo4</a></li>
+                <li><a href="index-exo5.html">exo5</a></li>
+                <li><a href="index-exo6.html">exo6</a></li>
+            </ul>
+        </nav>
+    </header>
+
+  <img id="mainImage" src="" alt="Image principale">
+
+  <div class="thumbnails">
+    <img src="galery/image0.jpg" class="thumbnail" alt="Miniature 1">
+    <img src="galery/Screenshot_2024-10-27-06-17-36-251_jp.ne.ibis.ibispaintx.app-edit.jpg" class="thumbnail" alt="Miniature 2">
+    <img src="galery/Screenshot_2024-10-27-20-44-18-835_jp.png" class="thumbnail" alt="Miniature 3">
+    <img src="galery/Screenshot_2024-10-28-16-17-34-432_jp.png" class="thumbnail" alt="Miniature 4">
+  </div>
+
+  <input id="filterInput" placeholder="Filtrer les pays...">
+
+  <ul id="countryList">
+    <li>Afghanistan</li>
+    <li>Albanie</li>
+    <li>Algérie</li>
+    <li>Andorre</li>
+    <li>Angola</li>
+    <li>Antigua-et-Barbuda</li>
+    <li>Arabie Saoudite</li>
+    <li>Argentine</li>
+    <li>Arménie</li>
+    <li>Australie</li>
+    <li>Autriche</li>
+    <li>Azerbaïdjan</li>
+    <li>Bahamas</li>
+    <li>Bahreïn</li>
+    <li>Bangladesh</li>
+    <li>Barbade</li>
+    <li>Belgique</li>
+    <li>Bélize</li>
+    <li>Bénin</li>
+    <li>Bhoutan</li>
+    <li>Biélorussie</li>
+    <li>Bolivie</li>
+    <li>Bosnie-Herzégovine</li>
+    <li>Botswana</li>
+    <li>Brésil</li>
+    <li>Brunei</li>
+    <li>Bulgarie</li>
+    <li>Burkina Faso</li>
+    <li>Burundi</li>
+    <li>Cambodge</li>
+    <li>Cameroun</li>
+    <li>Canada</li>
+    <li>Cap-Vert</li>
+    <li>République Centrafricaine</li>
+    <li>Chili</li>
+    <li>Chine</li>
+    <li>Chypre</li>
+    <li>Colombie</li>
+    <li>Comores</li>
+    <li>Congo</li>
+    <li>République Démocratique du Congo</li>
+    <li>Corée du Nord</li>
+    <li>Corée du Sud</li>
+    <li>Costa Rica</li>
+    <li>Côte d'Ivoire</li>
+    <li>Croatie</li>
+    <li>Cuba</li>
+    <li>Danemark</li>
+    <li>Djibouti</li>
+    <li>Dominique</li>
+    <li>Égypte</li>
+    <li>Émirats Arabes Unis</li>
+    <li>Équateur</li>
+    <li>Érythrée</li>
+    <li>Espagne</li>
+    <li>Estonie</li>
+    <li>Eswatini</li>
+    <li>États-Unis</li>
+    <li>Éthiopie</li>
+    <li>Fidji</li>
+    <li>Finlande</li>
+    <li>France</li>
+    <li>Gabon</li>
+    <li>Gambie</li>
+    <li>Géorgie</li>
+    <li>Ghana</li>
+    <li>Grèce</li>
+    <li>Grenade</li>
+    <li>Guatemala</li>
+    <li>Guinée</li>
+    <li>Guinée-Bissau</li>
+    <li>Guinée Équatoriale</li>
+    <li>Guyana</li>
+    <li>Haïti</li>
+    <li>Honduras</li>
+    <li>Hongrie</li>
+    <li>Inde</li>
+    <li>Indonésie</li>
+    <li>Irak</li>
+    <li>Iran</li>
+    <li>Irlande</li>
+    <li>Islande</li>
+    <li>Israël</li>
+    <li>Italie</li>
+    <li>Jamaïque</li>
+    <li>Japon</li>
+    <li>Jordanie</li>
+    <li>Kazakhstan</li>
+    <li>Kenya</li>
+    <li>Kirghizistan</li>
+    <li>Kiribati</li>
+    <li>Koweït</li>
+    <li>Laos</li>
+    <li>Lesotho</li>
+    <li>Lettonie</li>
+    <li>Liban</li>
+    <li>Libéria</li>
+    <li>Libye</li>
+    <li>Liechtenstein</li>
+    <li>Lituanie</li>
+    <li>Luxembourg</li>
+    <li>Macédoine du Nord</li>
+    <li>Madagascar</li>
+    <li>Malaisie</li>
+    <li>Malawi</li>
+    <li>Maldives</li>
+    <li>Mali</li>
+    <li>Malte</li>
+    <li>Maroc</li>
+    <li>Marshall</li>
+    <li>Maurice</li>
+    <li>Mauritanie</li>
+    <li>Mexique</li>
+    <li>Micronésie</li>
+    <li>Moldavie</li>
+    <li>Monaco</li>
+    <li>Mongolie</li>
+    <li>Monténégro</li>
+    <li>Mozambique</li>
+    <li>Namibie</li>
+    <li>Nauru</li>
+    <li>Népal</li>
+    <li>Nicaragua</li>
+    <li>Niger</li>
+    <li>Nigéria</li>
+    <li>Norvège</li>
+    <li>Nouvelle-Zélande</li>
+    <li>Oman</li>
+    <li>Ouganda</li>
+    <li>Ouzbékistan</li>
+    <li>Pakistan</li>
+    <li>Palaos</li>
+    <li>Panama</li>
+    <li>Papouasie-Nouvelle-Guinée</li>
+    <li>Paraguay</li>
+    <li>Pays-Bas</li>
+    <li>Pérou</li>
+    <li>Philippines</li>
+    <li>Pologne</li>
+    <li>Portugal</li>
+    <li>Qatar</li>
+    <li>République Dominicaine</li>
+    <li>République Tchèque</li>
+    <li>Roumanie</li>
+    <li>Royaume-Uni</li>
+    <li>Russie</li>
+    <li>Rwanda</li>
+    <li>Saint-Christophe-et-Niévès</li>
+    <li>Sainte-Lucie</li>
+    <li>Saint-Marin</li>
+    <li>Saint-Vincent-et-les-Grenadines</li>
+    <li>Salomon</li>
+    <li>Salvador</li>
+    <li>Samoa</li>
+    <li>Sao Tomé-et-Principe</li>
+    <li>Sénégal</li>
+    <li>Serbie</li>
+    <li>Seychelles</li>
+    <li>Sierra Leone</li>
+    <li>Singapour</li>
+    <li>Slovaquie</li>
+    <li>Slovénie</li>
+    <li>Somalie</li>
+    <li>Soudan</li>
+    <li>Soudan du Sud</li>
+    <li>Sri Lanka</li>
+    <li>Suède</li>
+    <li>Suisse</li>
+    <li>Suriname</li>
+    <li>Syrie</li>
+    <li>Tadjikistan</li>
+    <li>Tanzanie</li>
+    <li>Tchad</li>
+    <li>Thaïlande</li>
+    <li>Timor oriental</li>
+    <li>Togo</li>
+    <li>Tonga</li>
+    <li>Trinité-et-Tobago</li>
+    <li>Tunisie</li>
+    <li>Turkménistan</li>
+    <li>Turquie</li>
+    <li>Tuvalu</li>
+    <li>Ukraine</li>
+    <li>Uruguay</li>
+    <li>Vanuatu</li>
+    <li>Vatican</li>
+    <li>Venezuela</li>
+    <li>Viêt Nam</li>
+    <li>Yémen</li>
+    <li>Zambie</li>
+    <li>Zimbabwe</li>
+  </ul>
+
+  <script>
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const mainImage = document.getElementById('mainImage');
+
+    thumbnails.forEach(thumbnail => {
+      thumbnail.addEventListener('click', () => {
+        mainImage.src = thumbnail.src;
+        mainImage.alt = thumbnail.alt;
+      });
+    });
+
+  const filterInput = document.getElementById('filterInput');
+  const countryList = document.getElementById('countryList');
+  const countries = countryList.getElementsByTagName('li');
+
+  filterInput.addEventListener('input', () => {
+    const filterValue = filterInput.value.toLowerCase();
+    Array.from(countries).forEach(country => {
+      const countryText = country.textContent.toLowerCase();
+      country.style.display = countryText.includes(filterValue) ? '' : 'none';
+    });
+  });
+  </script>
+
+</body>
+</html>
