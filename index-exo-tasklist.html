@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste de Tâches</title>
+    <link rel="stylesheet" href="css.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        #taskInput {
+            width: 100%;
+            max-width: 300px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            max-width: 100px;
+            padding: 5px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste de Tâches</h1>
+
+    <input type="text" id="taskInput" placeholder="Nouvelle tâche...">
+    <button onclick="addTask()">Ajouter</button>
+
+    <h2>Tâches en cours</h2>
+    <ul id="taskList"></ul>
+
+    <h2>Tâches complétées</h2>
+    <ul id="completedTasks"></ul>
+
+    <script>
+        window.onload = function() {
+            loadTasks();
+        };
+
+        function saveTasks() {
+            const tasks = [];
+            document.querySelectorAll("#taskList li").forEach(task => tasks.push(task.id));
+            const completedTasks = [];
+            document.querySelectorAll("#completedTasks li").forEach(task => completedTasks.push(task.id));
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+            localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
+        }
+
+        function loadTasks() {
+            const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            const completedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
+            
+            tasks.forEach(task => createTaskElement(task, false));
+            completedTasks.forEach(task => createTaskElement(task, true));
+        }
+
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            const taskName = taskInput.value.trim();
+
+            if (taskName === "") {
+                alert("Veuillez entrer une tâche.");
+                return;
+            }
+
+            if (document.getElementById(taskName)) {
+                alert("Cette tâche existe déjà.");
+                return;
+            }
+
+            createTaskElement(taskName, false);
+            saveTasks();
+            taskInput.value = "";
+        }
+
+        function createTaskElement(taskName, isCompleted) {
+            const taskItem = document.createElement("li");
+            taskItem.id = taskName;
+            taskItem.textContent = taskName;
+
+            if (!isCompleted) {
+                const completeButton = document.createElement("button");
+                completeButton.textContent = "Terminer";
+                completeButton.onclick = function() {
+                    markAsCompleted(taskName);
+                };
+                taskItem.appendChild(completeButton);
+            }
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Supprimer";
+            deleteButton.onclick = function() {
+                deleteTask(taskName);
+            };
+            taskItem.appendChild(deleteButton);
+
+            if (isCompleted) {
+                document.getElementById("completedTasks").appendChild(taskItem);
+            } else {
+                document.getElementById("taskList").appendChild(taskItem);
+            }
+        }
+
+        function deleteTask(taskName) {
+            document.getElementById(taskName).remove();
+            saveTasks();
+        }
+
+        function markAsCompleted(taskName) {
+            const taskItem = document.getElementById(taskName);
+            taskItem.removeChild(taskItem.querySelector("button")); 
+            document.getElementById("completedTasks").appendChild(taskItem); 
+            saveTasks();
+        }
+    </script>
+</body>
+</html>
