@@ -42,11 +42,22 @@
 
         li {
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            align-items: center;
             padding: 8px;
             margin: 5px 0;
             border-radius: 4px;
+        }
+        
+        .task-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-buttons {
+            display: flex;
+            gap: 5px;
         }
     </style>
 </head>
@@ -69,9 +80,13 @@
 
         function saveTasks() {
             const tasks = [];
-            document.querySelectorAll("#taskList li").forEach(task => tasks.push(task.id));
+            document.querySelectorAll("#taskList li").forEach(task => {
+                tasks.push({ name: task.id, time: task.getAttribute("data-time") });
+            });
             const completedTasks = [];
-            document.querySelectorAll("#completedTasks li").forEach(task => completedTasks.push(task.id));
+            document.querySelectorAll("#completedTasks li").forEach(task => {
+                completedTasks.push({ name: task.id, time: task.getAttribute("data-time") });
+            });
             localStorage.setItem("tasks", JSON.stringify(tasks));
             localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
         }
@@ -80,13 +95,14 @@
             const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
             const completedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
             
-            tasks.forEach(task => createTaskElement(task, false));
-            completedTasks.forEach(task => createTaskElement(task, true));
+            tasks.forEach(task => createTaskElement(task.name, task.time, false));
+            completedTasks.forEach(task => createTaskElement(task.name, task.time, true));
         }
 
         function addTask() {
             const taskInput = document.getElementById("taskInput");
             const taskName = taskInput.value.trim();
+            const taskTime = new Date().toLocaleString();
 
             if (taskName === "") {
                 alert("Veuillez entrer une tâche.");
@@ -98,31 +114,55 @@
                 return;
             }
 
-            createTaskElement(taskName, false);
+            createTaskElement(taskName, taskTime, false);
             saveTasks();
             taskInput.value = "";
         }
 
-        function createTaskElement(taskName, isCompleted) {
+        function createTaskElement(taskName, taskTime, isCompleted) {
             const taskItem = document.createElement("li");
             taskItem.id = taskName;
-            taskItem.textContent = taskName;
+            taskItem.setAttribute("data-time", taskTime);
+
+            const taskInfo = document.createElement("div");
+            taskInfo.className = "task-info";
+            taskInfo.innerHTML = `<span>${taskName} (Ajouté le : ${taskTime})</span>`;
+
+            const taskButtons = document.createElement("div");
+            taskButtons.className = "task-buttons";
 
             if (!isCompleted) {
                 const completeButton = document.createElement("button");
                 completeButton.textContent = "Terminer";
                 completeButton.onclick = function() {
-                    markAsCompleted(taskName);
+                    markAsCompleted(taskItem);
                 };
-                taskItem.appendChild(completeButton);
+                taskButtons.appendChild(completeButton);
+            } else {
+                const revertButton = document.createElement("button");
+                revertButton.textContent = "En cours";
+                revertButton.onclick = function() {
+                    markAsInProgress(taskItem);
+                };
+                taskButtons.appendChild(revertButton);
             }
+
+            const editButton = document.createElement("button");
+            editButton.textContent = "Modifier";
+            editButton.onclick = function() {
+                editTaskName(taskItem);
+            };
+            taskButtons.appendChild(editButton);
 
             const deleteButton = document.createElement("button");
             deleteButton.textContent = "Supprimer";
             deleteButton.onclick = function() {
-                deleteTask(taskName);
+                deleteTask(taskItem);
             };
-            taskItem.appendChild(deleteButton);
+            taskButtons.appendChild(deleteButton);
+
+            taskItem.appendChild(taskInfo);
+            taskItem.appendChild(taskButtons);
 
             if (isCompleted) {
                 document.getElementById("completedTasks").appendChild(taskItem);
@@ -131,16 +171,39 @@
             }
         }
 
-        function deleteTask(taskName) {
-            document.getElementById(taskName).remove();
+        function deleteTask(taskItem) {
+            taskItem.remove();
             saveTasks();
         }
 
-        function markAsCompleted(taskName) {
-            const taskItem = document.getElementById(taskName);
-            taskItem.removeChild(taskItem.querySelector("button")); 
-            document.getElementById("completedTasks").appendChild(taskItem); 
+        function markAsCompleted(taskItem) {
+            const taskName = taskItem.id;
+            const taskTime = taskItem.getAttribute("data-time");
+            taskItem.remove();
+            createTaskElement(taskName, taskTime, true);
             saveTasks();
+        }
+
+        function markAsInProgress(taskItem) {
+            const taskName = taskItem.id;
+            const taskTime = taskItem.getAttribute("data-time");
+            taskItem.remove();
+            createTaskElement(taskName, taskTime, false);
+            saveTasks();
+        }
+
+        function editTaskName(taskItem) {
+            const oldTaskName = taskItem.id;
+            const newTaskName = prompt("Modifier le nom de la tâche :", oldTaskName);
+            if (newTaskName && newTaskName.trim() !== "" && newTaskName !== oldTaskName) {
+                if (document.getElementById(newTaskName)) {
+                    alert("Une tâche avec ce nom existe déjà.");
+                } else {
+                    taskItem.id = newTaskName;
+                    taskItem.querySelector(".task-info span").innerText = `${newTaskName} (Ajouté le : ${taskItem.getAttribute("data-time")})`;
+                    saveTasks();
+                }
+            }
         }
     </script>
 </body>
